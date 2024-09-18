@@ -1,4 +1,4 @@
-const router = require("express").Router()
+ const router = require("express").Router()
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 
@@ -42,7 +42,8 @@ function generateToken(user) {
         _id: user._id,
         firstName: user.firstName,
         lastName: user.lastName,
-        email: user.email,
+        username: user.username,
+        imgUrl: user.imgUrl,
         exp: Date.now() + (60 * 15) * 1000     // 15 Mins 
     }
 

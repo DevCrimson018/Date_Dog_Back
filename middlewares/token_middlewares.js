@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken")
+const bcrypt = require("bcrypt")
 
 
 //Check the user is signed and have a valid token
@@ -46,9 +47,23 @@ const checkIsTheFollower = (req, res, next) => {
 
     const payload = jwt.verify(token, process.env.SECRET)
 
-    if(payload._id == req.body.followerId) {
+    let followerId = ""
+
+    if(req.query.followerId){
+        followerId = req.query.followerId
+        
+    }else{
+        followerId = req.body.followerId
+
+    }
+    
+    
+    
+    if(payload._id == followerId) {
         return next()
     }else{
+        console.log("No The Same Person");
+        
         return res.json({message: "No The Same Person"})
     }
 }

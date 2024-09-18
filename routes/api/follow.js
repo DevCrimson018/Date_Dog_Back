@@ -1,6 +1,6 @@
 const router = require("express").Router()
 
-const { checkIsSigned, checkImTheFollower } = require("../../middlewares/token_middlewares")
+const { checkIsSigned, checkIsTheFollower } = require("../../middlewares/token_middlewares")
 const Follow = require("../../models/follow.model")
 
 router.get("/", checkIsSigned, async (req, res) => {
@@ -26,7 +26,6 @@ router.post("/", checkIsSigned, checkIsTheFollower, async (req, res) => {
 router.delete("/", checkIsSigned, checkIsTheFollower, async (req, res) => {
     try {
         const deletedFollow = await Follow.findOneAndDelete(req.query)
-        console.log(req.query );
         return res.json(deletedFollow)
     } catch (error) {
         console.log(error);

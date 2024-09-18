@@ -11,9 +11,9 @@ const userSchema = new Schema({
     instagram: {type: String, required: false},
     whatsapp: {type: String, required: false},
     address: {
-        city: {type: String, required: false},
-        province: {type: String, required: false},
-        country: {type: String, required: false}
+        locality: {type: String, required: false},
+        municipality: {type: String, required: false},
+        province: {type: String, required: false}
     },
     dateCreated: {type: Date, required: false}
 })
