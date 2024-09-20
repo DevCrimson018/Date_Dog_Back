@@ -7,6 +7,8 @@ const checkIsSigned = (req, res, next) => {
     const token = req.headers.authorization
 
     if(token) {
+        console.log("Is Signed");
+        
         return next()
     }else {
         return res.json({message: "No Signed"})
@@ -34,9 +36,16 @@ const checkIsThePerson = (req, res, next) => {
     
     const payload = jwt.verify(token, process.env.SECRET)
 
+    console.log(payload);
+    console.log(req.body);
+    
+    
+
     if(req.body._id == payload._id) {
         return next()
     }else{
+        console.log("Bobo mio");
+        
         return res.json({message: "No The Same Person"})
     }
 }

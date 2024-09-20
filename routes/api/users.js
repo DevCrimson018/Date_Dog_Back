@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt")
 
 const { checkIsSigned, checkIsThePerson } = require("../../middlewares/token_middlewares")
 const User = require("../../models/user.model")
+const Dog = require("../../models/dog.model")
 
 router.get("/", checkIsSigned, async (req, res) => {
     try {
@@ -60,6 +61,26 @@ router.put("/:id", checkIsSigned, checkIsThePerson, async (req, res) => {
                     return res.json({message: "Incorrect Old Password"})
                 }
             })
+        }else if(req.body.address){
+
+            console.log("updating Address");
+            console.log(req.body.address);
+            
+            const newUser = await User.findByIdAndUpdate(id, {address : req.body.address}, {new: true})
+            const token = generateToken(newUser)
+            console.log(newUser);
+            
+            
+            const dogs = await Dog.find({idOwner : newUser._id})
+            console.log(dogs);
+            
+            for(let dog of dogs) {
+                const updatedDog = await Dog.findByIdAndUpdate(dog._id, {address: req.body.address}, {new: true})
+                console.log(updatedDog);
+                
+            }
+
+            return res.json(token)
         }else{
             console.log("Normal Update");
             
